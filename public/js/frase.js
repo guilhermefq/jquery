@@ -6,7 +6,7 @@ function fraseAleatoria() {
     $(".frase").hide();
 
 
-    $.get("http://192.168.15.180:3000/frases", trocaFraseAleatoria)
+    $.get("http://localhost:3000/frases", trocaFraseAleatoria)
     .fail(function() {
         $("#erro").toggle();
         setTimeout(function() {
@@ -35,7 +35,7 @@ function buscaFrase() {
 
     var dados = {id: fraseID};
 
-    $.get("http://192.168.15.180:3000/frases", dados, trocaFrase)
+    $.get("http://localhost:3000/frases", dados, trocaFrase)
         .fail(function(){
             $("#erro").toggle();
             setTimeout(function() {

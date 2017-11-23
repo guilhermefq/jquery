@@ -3,7 +3,7 @@ $("#botao-sync").click(sincronizarPlacar);
 
 function inserePlacar() {
     var corpoTabela = $(".placar").find("tbody");
-    var usuario = "Guilherme";
+    var usuario = $("#usuarios").val();
     var numPalavras = $("#contador-palavras").text();
 
     var linha = novaLinha(usuario, numPalavras);
@@ -64,7 +64,6 @@ function sincronizarPlacar() {
     linhas.each(function() {
       var usuario = $(this).find("td:nth-child(1)").text();
       var palavras = $(this).find("td:nth-child(2)").text();
-      console.log(usuario);
 
       var score = {
         usuario: usuario,
@@ -79,13 +78,20 @@ function sincronizarPlacar() {
       placar: placar
     };
 
-    $.post("http://192.168.15.180:3000/placar", dados, function(){
-        console.log("Placar sincronizado com sucesso!");
+    $.post("http://localhost:3000/placar", dados , function() {
+        console.log("Placar sincronizado com sucesso");
+        $(".tooltip").tooltipster("open");
+    }).fail(function(){
+        $(".tooltip").tooltipster("open").tooltipster("content", "Falha ao sincronizar");
+    }).always(function(){
+        setTimeout(function() {
+        $(".tooltip").tooltipster("close");
+    }, 1200);
     });
 }
 
 function atualizaPlacar(){
-    $.get("http://192.168.15.180:3000/placar", function(data) {
+    $.get("http://localhost:3000/placar", function(data) {
         $(data).each(function(){
             var linha = novaLinha(this.usuario, this.pontos);
 
